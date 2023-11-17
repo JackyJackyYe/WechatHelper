@@ -7,6 +7,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.lang.ThreadLocal
 
 const val TAG = "WhFastAccessibility"
 /**
@@ -56,6 +57,9 @@ abstract class FastAccessibilityService : AccessibilityService() {
         private set
     var executor: ExecutorService = Executors.newFixedThreadPool(4) // 执行任务的线程池
 
+    val tl_EventWrapper = ThreadLocal<EventWrapper?>()//变量线程副本
+
+    val tl_AnalyzeSourceResult = ThreadLocal<AnalyzeSourceResult?>()//变量线程副本
     override fun onServiceConnected() {
         if (this::class.java == specificServiceClass) instance = this
     }
@@ -67,14 +71,14 @@ abstract class FastAccessibilityService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        Log.d(TAG,"onAccessibilityEvent:$event")
+        Log.i(TAG,"onAccessibilityEvent:$event")
         if (!enableListenApp || event == null) return
         if (event.eventType in listenEventTypeList) {
 
             val className = event.className.blankOrThis()
             val packageName = event.packageName.blankOrThis()
             val eventType = event.eventType
-            Log.d(TAG,"listenEventTypeList:$eventType")
+            Log.i(TAG,"listenEventTypeList:$eventType")
             if (className.isNotBlank() && packageName.isNotBlank())
                 analyzeSource(EventWrapper(packageName, className, eventType), ::analyzeCallBack)
         }
@@ -88,13 +92,29 @@ abstract class FastAccessibilityService : AccessibilityService() {
      * */
     fun analyzeSource(wrapper: EventWrapper? = null, callback: ((EventWrapper?, AnalyzeSourceResult) -> Unit)? = null) {
         executor.execute {
-            Thread.sleep(100)   // 休眠200毫秒避免获取到错误的source
-            Log.d(TAG,"analyzeSource:$wrapper")
-            currentEventWrapper = wrapper
+            Thread.sleep(100)   // 休眠100毫秒避免获取到错误的source
+            Log.i(TAG,"analyzeSource:$wrapper${Thread.currentThread()}")
+            //currentEventWrapper = wrapper
+            //Log.i(TAG,"analyzeSourcecurrentEventWrapper:$currentEventWrapper")
             // 遍历解析获得结点列表
             val analyzeSourceResult = AnalyzeSourceResult(arrayListOf())
-            analyzeNode(rootInActiveWindow, analyzeSourceResult.nodes)
-            callback?.invoke(currentEventWrapper, analyzeSourceResult)
+            tl_EventWrapper.set(wrapper)
+            tl_AnalyzeSourceResult.set(AnalyzeSourceResult(arrayListOf()))
+            var test=tl_AnalyzeSourceResult.get()
+            //Log.i(TAG,"threadLocal:${test}")
+            //threadLocal.get()!!.nodes.add(NodeWrapper(className = "${Thread.currentThread()}" ))
+            analyzeNode(rootInActiveWindow, tl_AnalyzeSourceResult.get()!!.nodes)
+            //analyzeNode(rootInActiveWindow, analyzeSourceResult.nodes)
+            test=tl_AnalyzeSourceResult.get()
+            Log.i(TAG,"threadLocal:${test}")
+            //if ((tl_AnalyzeSourceResult.get())
+            //callback?.invoke(tl_EventWrapper.get(), analyzeSourceResult)
+            if (tl_AnalyzeSourceResult.get()?.nodes != null) {
+                callback?.invoke(tl_EventWrapper.get(), tl_AnalyzeSourceResult.get()!!)
+                tl_EventWrapper.remove()
+                tl_AnalyzeSourceResult.remove()
+            }
+
         }
     }
 
@@ -124,6 +144,7 @@ abstract class FastAccessibilityService : AccessibilityService() {
     }
 
     // 监听Event的自定义回调，可按需重写
+
     open fun analyzeCallBack(wrapper: EventWrapper?, result: AnalyzeSourceResult) {}
 
     override fun onInterrupt() {}

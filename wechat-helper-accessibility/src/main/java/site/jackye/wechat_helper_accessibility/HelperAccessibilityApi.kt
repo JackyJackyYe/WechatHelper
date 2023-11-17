@@ -377,3 +377,14 @@ fun AnalyzeSourceResult.findAllTextNode(includeDesc: Boolean = false): AnalyzeSo
     }
     return result
 }
+fun AnalyzeSourceResult.findAllIdNode(): AnalyzeSourceResult {
+        val result = AnalyzeSourceResult()
+        nodes.forEach { node ->
+            if (!node.id.isNullOrBlank()) {
+                result.nodes.add(node)
+                return@forEach
+            }
+
+        }
+        return result
+}
