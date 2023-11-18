@@ -97,31 +97,31 @@ abstract class FastAccessibilityService : AccessibilityService() {
             //currentEventWrapper = wrapper
             //Log.i(TAG,"analyzeSourcecurrentEventWrapper:$currentEventWrapper")
             // 遍历解析获得结点列表
-            val analyzeSourceResult = AnalyzeSourceResult(arrayListOf())
+            //val analyzeSourceResult = AnalyzeSourceResult(arrayListOf())
             tl_EventWrapper.set(wrapper)
             tl_AnalyzeSourceResult.set(AnalyzeSourceResult(arrayListOf()))
-            var test=tl_AnalyzeSourceResult.get()
+            //var test=tl_AnalyzeSourceResult.get()
             //Log.i(TAG,"threadLocal:${test}")
             //threadLocal.get()!!.nodes.add(NodeWrapper(className = "${Thread.currentThread()}" ))
-            analyzeNode(rootInActiveWindow, tl_AnalyzeSourceResult.get()!!.nodes)
+            analyzeNode(rootInActiveWindow, tl_AnalyzeSourceResult.get()!!.nodes,0)
             //analyzeNode(rootInActiveWindow, analyzeSourceResult.nodes)
-            test=tl_AnalyzeSourceResult.get()
+            var test=tl_AnalyzeSourceResult.get()
             Log.i(TAG,"threadLocal:${test}")
             //if ((tl_AnalyzeSourceResult.get())
             //callback?.invoke(tl_EventWrapper.get(), analyzeSourceResult)
             if (tl_AnalyzeSourceResult.get()?.nodes != null) {
                 callback?.invoke(tl_EventWrapper.get(), tl_AnalyzeSourceResult.get()!!)
-                tl_EventWrapper.remove()
-                tl_AnalyzeSourceResult.remove()
-            }
 
+            }
+            tl_EventWrapper.remove()
+            tl_AnalyzeSourceResult.remove()
         }
     }
 
     /**
      * 递归遍历结点的方法
      * */
-    private fun analyzeNode(node: AccessibilityNodeInfo?, list: ArrayList<NodeWrapper>) {
+    private fun analyzeNode(node: AccessibilityNodeInfo?, list: ArrayList<NodeWrapper>,depthcount:Int) {
         if (node == null) return
         val bounds = Rect()
         node.getBoundsInScreen(bounds)
@@ -130,6 +130,7 @@ abstract class FastAccessibilityService : AccessibilityService() {
                 text = node.text.blankOrThis(),
                 id = node.viewIdResourceName.blankOrThis(),
                 bounds = bounds,
+                depth = depthcount,
                 className = node.className.blankOrThis(),
                 description = node.contentDescription.blankOrThis(),
                 clickable = node.isClickable,
@@ -139,7 +140,7 @@ abstract class FastAccessibilityService : AccessibilityService() {
             )
         )
         if (node.childCount > 0) {
-            for (index in 0 until node.childCount) analyzeNode(node.getChild(index), list)
+            for (index in 0 until node.childCount) analyzeNode(node.getChild(index), list,depthcount+1)
         }
     }
 

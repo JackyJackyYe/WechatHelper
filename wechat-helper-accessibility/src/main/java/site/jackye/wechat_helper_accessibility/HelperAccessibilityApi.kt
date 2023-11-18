@@ -336,6 +336,35 @@ fun AnalyzeSourceResult.findNodesById(id: String): AnalyzeSourceResult {
 }
 
 /**
+ * 根据id查找结点
+ *
+ * @param id 结点id
+ * */
+fun AnalyzeSourceResult.findNodeByDepth(depth: Int): NodeWrapper? {
+    nodes.forEach { node ->
+        if (node.depth==depth) {
+            return node
+        }
+    }
+    return null
+}
+
+/**
+ * 根据depth查找结点列表
+ *
+ * @param depth 结点id
+ * */
+fun AnalyzeSourceResult.findNodesByDepth(depth: Int): AnalyzeSourceResult {
+    val result = AnalyzeSourceResult()
+    nodes.forEach { node ->
+        if (node.depth==depth) {
+            result.nodes.add(node)
+        }
+    }
+    return result
+}
+
+/**
  * 根据传入的表达式结果查找结点
  *
  * @param expression 匹配条件表达式
@@ -377,6 +406,9 @@ fun AnalyzeSourceResult.findAllTextNode(includeDesc: Boolean = false): AnalyzeSo
     }
     return result
 }
+/**
+ * 查找所有id不为空的结点
+ * */
 fun AnalyzeSourceResult.findAllIdNode(): AnalyzeSourceResult {
         val result = AnalyzeSourceResult()
         nodes.forEach { node ->
