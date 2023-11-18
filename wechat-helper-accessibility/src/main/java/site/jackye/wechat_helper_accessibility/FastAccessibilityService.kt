@@ -95,19 +95,17 @@ abstract class FastAccessibilityService : AccessibilityService() {
             Thread.sleep(100)   // 休眠100毫秒避免获取到错误的source
             Log.i(TAG,"analyzeSource:$wrapper${Thread.currentThread()}")
             //currentEventWrapper = wrapper
-            //Log.i(TAG,"analyzeSourcecurrentEventWrapper:$currentEventWrapper")
-            // 遍历解析获得结点列表
             //val analyzeSourceResult = AnalyzeSourceResult(arrayListOf())
             tl_EventWrapper.set(wrapper)
             tl_AnalyzeSourceResult.set(AnalyzeSourceResult(arrayListOf()))
-            //var test=tl_AnalyzeSourceResult.get()
-            //Log.i(TAG,"threadLocal:${test}")
             //threadLocal.get()!!.nodes.add(NodeWrapper(className = "${Thread.currentThread()}" ))
+
+
+            // 遍历解析获得结点列表
             analyzeNode(rootInActiveWindow, tl_AnalyzeSourceResult.get()!!.nodes,0)
             //analyzeNode(rootInActiveWindow, analyzeSourceResult.nodes)
             var test=tl_AnalyzeSourceResult.get()
             Log.i(TAG,"threadLocal:${test}")
-            //if ((tl_AnalyzeSourceResult.get())
             //callback?.invoke(tl_EventWrapper.get(), analyzeSourceResult)
             if (tl_AnalyzeSourceResult.get()?.nodes != null) {
                 callback?.invoke(tl_EventWrapper.get(), tl_AnalyzeSourceResult.get()!!)
@@ -121,7 +119,7 @@ abstract class FastAccessibilityService : AccessibilityService() {
     /**
      * 递归遍历结点的方法
      * */
-    private fun analyzeNode(node: AccessibilityNodeInfo?, list: ArrayList<NodeWrapper>,depthcount:Int) {
+    private fun analyzeNode(node: AccessibilityNodeInfo?, list: ArrayList<NodeWrapper>,depthCount:Int) {
         if (node == null) return
         val bounds = Rect()
         node.getBoundsInScreen(bounds)
@@ -130,7 +128,7 @@ abstract class FastAccessibilityService : AccessibilityService() {
                 text = node.text.blankOrThis(),
                 id = node.viewIdResourceName.blankOrThis(),
                 bounds = bounds,
-                depth = depthcount,
+                depth = depthCount,
                 className = node.className.blankOrThis(),
                 description = node.contentDescription.blankOrThis(),
                 clickable = node.isClickable,
@@ -140,7 +138,7 @@ abstract class FastAccessibilityService : AccessibilityService() {
             )
         )
         if (node.childCount > 0) {
-            for (index in 0 until node.childCount) analyzeNode(node.getChild(index), list,depthcount+1)
+            for (index in 0 until node.childCount) analyzeNode(node.getChild(index), list,depthCount+1)
         }
     }
 

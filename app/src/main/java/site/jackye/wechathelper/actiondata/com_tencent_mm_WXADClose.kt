@@ -19,28 +19,31 @@ class ComTencentMmWXADClose {
     }
     fun statFalse(wrapper: EventWrapper?, result: AnalyzeSourceResult){
         stat=false
+        reset()
         Log.w(MyAccessibilityService.TAG, "actionstatFalse:${stat}${Thread.currentThread()}")
     }
     fun step1(wrapper: EventWrapper?, result: AnalyzeSourceResult){
         Log.w(MyAccessibilityService.TAG, "actionstatTrue:${stat}|ADstep1:${step1}")
         //reset()
         if(stat) {
-            result.findAllIdNode().findNodeByText("广告", textAllMatch = true)
+            result.findAllIdNode().findNodesByDepth(20).findNodeByText("广告", textAllMatch = true)
                 .click(gestureClick = false)
-            step1 = true
+
         }
         Log.w(MyAccessibilityService.TAG, "actionstatTrue:${stat}|ADstep1:${step1}${Thread.currentThread()}")
     }
     fun step2(wrapper: EventWrapper?, result: AnalyzeSourceResult){
         Log.w(MyAccessibilityService.TAG, "ADstep2:${step2}")
+        step1 = true
         if(stat&&step1) {
             result.findAllIdNode().findNodeByText("关闭该广告", textAllMatch = true)
                 .click(gestureClick = false)
-            step2 = true
+
         }
         Log.w(MyAccessibilityService.TAG, "ADstep2:${step2}${Thread.currentThread()}")
     }
     fun step3(wrapper: EventWrapper?, result: AnalyzeSourceResult){
+        step2 = true
         Log.w(MyAccessibilityService.TAG, "actionstatTrue:${stat}|ADstep1:${step1}|ADstep2:${step2}")
         if(stat&&step1&&step2) {
             //result.findAllIdNode().findNodeByText("关闭该广告", textAllMatch = true)
