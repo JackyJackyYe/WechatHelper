@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">WechatHelperAccessibility</string>
+    <string name="app_name">WechatHelper</string>
     <string name="accessibility_desc">WechatHelperAccessibility Demo</string>
-    <string name="accessibility_label">WechatHelperAccessibility Demo Service</string>
+    <string name="accessibility_label">WechatHelperAccessibility Service</string>
     <string name="service_status_disable">😳点击进入幻想时间~</string>
     <string name="service_status_enable">🤡现在是幻想时间~</string>
     <string name="service_is_enable_tips">😲幻想时间到期，请续费~</string>
-    <string name="Service_SW_text">服务生效</string>
+    <string name="Debug_SW_text">Debug模式</string>
     <string name="WXPCLogin_SW_text">微信电脑版自动登录</string>
     <string name="ADJump_SW_text">微信朋友圈广告自动跳过</string>
     <string name="open_target_app">打开目标APP</string>

@@ -24,7 +24,7 @@ abstract class FastAccessibilityService : AccessibilityService() {
         lateinit var specificServiceClass: Class<*> // 具体无障碍服务实现类的类类型
         private var listenEventTypeList = arrayListOf(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) // 监听的event类型列表
         val currentEvent get() = instance?.currentEventWrapper  // 获取当前Event
-
+        var serviceState=false
         /**
          * 库初始化方法，必须在Application的OnCreate()中调用
          *
@@ -32,10 +32,11 @@ abstract class FastAccessibilityService : AccessibilityService() {
          * @param clazz 无障碍服务的类类型
          * @param typeList 监听的事件类型列表，不传默认只监听TYPE_WINDOW_STATE_CHANGED类型
          * */
-        fun init(context: Context, clazz: Class<*>, typeList: ArrayList<Int>? = null) {
+        fun init(context: Context, clazz: Class<*>, typeList: ArrayList<Int>? = null,boolean: Boolean) {
             _appContext = context.applicationContext
             specificServiceClass = clazz
             typeList?.let { listenEventTypeList = it }
+            serviceState=boolean
         }
 
         /**
@@ -60,6 +61,8 @@ abstract class FastAccessibilityService : AccessibilityService() {
     val tl_EventWrapper = ThreadLocal<EventWrapper?>()//变量线程副本
 
     val tl_AnalyzeSourceResult = ThreadLocal<AnalyzeSourceResult?>()//变量线程副本
+
+
     override fun onServiceConnected() {
         if (this::class.java == specificServiceClass) instance = this
     }
@@ -71,16 +74,21 @@ abstract class FastAccessibilityService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        Log.i(TAG,"onAccessibilityEvent:$event")
-        if (!enableListenApp || event == null) return
-        if (event.eventType in listenEventTypeList) {
+        if(serviceState) {
+            Log.i(TAG, "onAccessibilityEvent:$event")
+            if (!enableListenApp || event == null) return
+            if (event.eventType in listenEventTypeList) {
 
-            val className = event.className.blankOrThis()
-            val packageName = event.packageName.blankOrThis()
-            val eventType = event.eventType
-            Log.i(TAG,"listenEventTypeList:$eventType")
-            if (className.isNotBlank() && packageName.isNotBlank())
-                analyzeSource(EventWrapper(packageName, className, eventType), ::analyzeCallBack)
+                val className = event.className.blankOrThis()
+                val packageName = event.packageName.blankOrThis()
+                val eventType = event.eventType
+                Log.i(TAG, "listenEventTypeList:$eventType")
+                if (className.isNotBlank() && packageName.isNotBlank())
+                    analyzeSource(
+                        EventWrapper(packageName, className, eventType),
+                        ::analyzeCallBack
+                    )
+            }
         }
     }
 
