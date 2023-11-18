@@ -8,11 +8,16 @@ import site.jackye.wechathelper.*
 
 class ComTencentMmWXPCLogin {
     fun startPoint(wrapper: EventWrapper?, result: AnalyzeSourceResult){
-
-        Thread.sleep(200)
-        Log.d(MyAccessibilityService.TAG, "PC_click")
-        //result.findNodeById("com.tencent.mm:id/pjb").click()
-        result.findNodeByText("登录", textAllMatch = true).click()
-
+        if(MyApp.WXLoginState) {
+            Thread.sleep(200)
+            Log.d(MyAccessibilityService.TAG, "PC_click")
+            //result.findNodeById("com.tencent.mm:id/pjb").click()
+            if(!MyApp.debugState){
+                result.findNodeByText("登录", textAllMatch = true).click()
+            }
+            else {
+                Log.d(MyAccessibilityService.TAG, "PC_click:FINISHED(debug)")
+            }
+        }
     }
 }

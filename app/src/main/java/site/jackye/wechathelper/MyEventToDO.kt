@@ -5,7 +5,11 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import site.jackye.wechat_helper_accessibility.*
 import site.jackye.wechathelper.actiondata.*
-
+/**
+ * Author: JackyYe
+ * Date: 2023-11-18
+ * Desc:
+ */
  class MyEventToDO  {
      fun actionTypeWindowStateChanged(wrapper: EventWrapper?, result: AnalyzeSourceResult){
          Log.d(MyAccessibilityService.TAG, "actionWindowStateChanged:${wrapper?.className}")

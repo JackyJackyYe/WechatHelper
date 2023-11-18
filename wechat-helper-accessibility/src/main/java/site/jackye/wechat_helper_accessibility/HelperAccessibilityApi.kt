@@ -22,6 +22,12 @@ import org.w3c.dom.Node
  * */
 val isAccessibilityEnable get() = FastAccessibilityService.isServiceEnable
 
+
+fun serviceSet(boolean: Boolean){
+    FastAccessibilityService.serviceState =boolean
+}
+
+
 /**
  * 请求无障碍服务
  * @param autoJump 是否自动跳转无障碍设置页

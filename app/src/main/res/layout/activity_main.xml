@@ -29,23 +29,12 @@
         app:layout_constraintStart_toStartOf="@id/iv_service_status"
         app:layout_constraintTop_toBottomOf="@id/iv_service_status" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_open_target_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/open_target_app"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/iv_service_status"
-        app:layout_constraintStart_toStartOf="@id/iv_service_status"
-        app:layout_constraintTop_toBottomOf="@id/tv_service_status" />
-
     <Switch
-        android:id="@+id/Service_SW"
+        android:id="@+id/Debug_SW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:height="56dp"
-        android:text="@string/Service_SW_text"
+        android:text="@string/Debug_SW_text"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,10 +51,10 @@
         android:height="56dp"
         android:text="@string/WXPCLogin_SW_text"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/Service_SW"
+        app:layout_constraintEnd_toEndOf="@+id/Debug_SW"
         app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="@+id/Service_SW"
-        app:layout_constraintTop_toBottomOf="@+id/Service_SW" />
+        app:layout_constraintStart_toStartOf="@+id/Debug_SW"
+        app:layout_constraintTop_toBottomOf="@+id/Debug_SW" />
 
     <Switch
         android:id="@+id/ADJump_SW"
