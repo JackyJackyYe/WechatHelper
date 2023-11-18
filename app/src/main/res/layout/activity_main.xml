@@ -1,39 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_service_status"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_service_disable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_service_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="24dp"
         android:text="@string/service_status_disable"
         app:layout_constraintEnd_toEndOf="@id/iv_service_status"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@id/iv_service_status"
         app:layout_constraintTop_toBottomOf="@id/iv_service_status" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_open_target_app"
+    <Switch
+        android:id="@+id/Debug_SW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/open_target_app"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/iv_service_status"
-        app:layout_constraintStart_toStartOf="@id/iv_service_status"
-        app:layout_constraintTop_toBottomOf="@id/tv_service_status" />
+        android:height="56dp"
+        android:text="@string/Debug_SW_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_service_status"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <Switch
+        android:id="@+id/WXPCLogin_SW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:height="56dp"
+        android:text="@string/WXPCLogin_SW_text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/Debug_SW"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="@+id/Debug_SW"
+        app:layout_constraintTop_toBottomOf="@+id/Debug_SW" />
+
+    <Switch
+        android:id="@+id/ADJump_SW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:height="56dp"
+        android:text="@string/ADJump_SW_text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/WXPCLogin_SW"
+        app:layout_constraintStart_toStartOf="@+id/WXPCLogin_SW"
+        app:layout_constraintTop_toBottomOf="@+id/WXPCLogin_SW" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
