@@ -342,9 +342,9 @@ fun AnalyzeSourceResult.findNodesById(id: String): AnalyzeSourceResult {
 }
 
 /**
- * 根据id查找结点
+ * 根据depth查找结点
  *
- * @param id 结点id
+ * @param depth 结点id
  * */
 fun AnalyzeSourceResult.findNodeByDepth(depth: Int): NodeWrapper? {
     nodes.forEach { node ->
