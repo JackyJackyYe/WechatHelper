@@ -1,4 +1,4 @@
-package site.jackye.wechat_helper_accessibility
+package cn.coderpig.cp_fast_accessibility
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.GestureDescription
@@ -13,8 +13,8 @@ import androidx.annotation.RequiresApi
 import org.w3c.dom.Node
 
 /**
- * Author: JackyYe
- * Date: 2023-11-15
+ * Author: JackyJackyYe
+ * Date: 2023-11-17
  * Desc:
  */
 /**
