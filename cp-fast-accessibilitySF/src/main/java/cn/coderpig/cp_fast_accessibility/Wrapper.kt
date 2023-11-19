@@ -1,11 +1,11 @@
-package site.jackye.wechat_helper_accessibility
+package cn.coderpig.cp_fast_accessibility
 
 import android.graphics.Rect
 import android.view.accessibility.AccessibilityNodeInfo
 
 /**
- * Author: JackyYe
- * Date: 2023-11-15
+ * Author: JackyJackyYe
+ * Date: 2023-11-17
  * Desc: 实体包装类
  */
 data class EventWrapper(

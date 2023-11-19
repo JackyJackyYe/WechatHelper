@@ -1,4 +1,4 @@
-package site.jackye.wechat_helper_accessibility
+package cn.coderpig.cp_fast_accessibility
 import android.util.Log
 import android.accessibilityservice.AccessibilityService
 import android.content.Context
@@ -8,10 +8,10 @@ import android.view.accessibility.AccessibilityNodeInfo
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-const val TAG = "WhFastAccessibility"
+const val TAG = "CpFastAccessibility"
 /**
- * Author: JackyYe
- * Date: 2023-11-15
+ * Author: JackyJackyYe
+ * Date: 2023-11-17
  * Desc: 无障碍服务基类
  */
 abstract class FastAccessibilityService : AccessibilityService() {
